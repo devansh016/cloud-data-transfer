@@ -1,4 +1,5 @@
 FROM python:3.11
-# Or any preferred Python version.
-ADD main.py .
+WORKDIR /app
+COPY . .
 RUN pip install -r requirements.txt
+CMD ["python","app.py"]
