@@ -1,5 +1,5 @@
 FROM python:3.11
 WORKDIR /app
-RUN pip install -r requirements.txt
 COPY . .
+RUN pip install -r requirements.txt
 CMD [ "python", "app.py" ]
