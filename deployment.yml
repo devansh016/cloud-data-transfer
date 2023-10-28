@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-data-transfer
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      name: cloud-data-transfer
+  template:
+    metadata:
+      labels:
+        name: cloud-data-transfer
+    spec:
+      containers:
+        - name: application
+          image: devansh016/cloud-data-transfer
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
