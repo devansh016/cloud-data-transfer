@@ -17,7 +17,7 @@
         <header>Upload File</header>
         <form action="#">
           <input type="file" id="file" name="file" />
-
+          <span id="alert_message_1"></span>
           <input
             type="button"
             class="button"
@@ -28,7 +28,7 @@
         <div class="signup">
           <span class="signup"
             >Already uploaded file?
-            <label for="check">Share File</label>
+            <label id="share_lb" for="check">Share File</label>
           </span>
         </div>
       </div>
@@ -52,6 +52,7 @@
             type="password"
             placeholder="Create a password"
           />
+          <span id="alert_message_2"></span>
           <input
             type="button"
             class="button"
@@ -68,5 +69,8 @@
       </div>
     </div>
     <script src="script.js"></script>
+    <script>
+      getallfileslist();
+    </script>
   </body>
 </html>

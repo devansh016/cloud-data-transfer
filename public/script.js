@@ -4,31 +4,6 @@ function download_file() {
   }&password=${document.getElementById("d_pass").value}`;
 }
 
-function upload_file() {
-  var formdata = new FormData();
-  formdata.append("inputFile", document.getElementById("file").files[0]);
-
-  var requestOptions = {
-    method: "POST",
-    body: formdata,
-    redirect: "follow",
-  };
-
-  fetch("/api/file/upload/", requestOptions)
-    .then((response) => {
-      if (!response.ok) {
-        window.alert("Error in uploading file try again after sometime.");
-      } else {
-        console.log(response.body);
-        window.alert("File uploaded Successfully.");
-      }
-    })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => console.log("error", error));
-}
-
 function login_user() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -47,16 +22,12 @@ function login_user() {
 
   fetch("/api/auth/signin", requestOptions)
     .then((response) => {
-      if (!response.ok) {
-        window.alert("Invalid Credentials");
-      } else {
-        console.log(response.body);
-        window.alert("Login Success.");
-        window.location.replace("/upload.html");
-      }
+      return response.json();
     })
     .then((result) => {
-      console.log(result);
+      document.getElementById("alert_message_1").innerHTML = result.message;
+      location.href = "/upload.html";
+      return result;
     })
     .catch((error) => console.log("error", error));
 }
@@ -80,15 +51,32 @@ function register_user() {
 
   fetch("/api/auth/signup", requestOptions)
     .then((response) => {
-      if (!response.ok) {
-        window.alert("Email id already in use.");
-      } else {
-        console.log(response.body);
-        window.alert("User registration Success.");
-      }
+      return response.json();
     })
     .then((result) => {
-      console.log(result);
+      document.getElementById("alert_message_2").innerHTML = result.message;
+      return result;
+    })
+    .catch((error) => console.log("error", error));
+}
+
+function upload_file() {
+  var formdata = new FormData();
+  formdata.append("inputFile", document.getElementById("file").files[0]);
+
+  var requestOptions = {
+    method: "POST",
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch("/api/file/upload/", requestOptions)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      getallfileslist();
+      document.getElementById("alert_message_1").innerHTML = result.message;
     })
     .catch((error) => console.log("error", error));
 }
@@ -112,38 +100,38 @@ function share_file() {
 
   fetch("/api/file/share", requestOptions)
     .then((response) => {
-      if (!response.ok) {
-        window.alert("Error in sharing file.");
-      } else {
-        console.log(response.body);
-        window.alert("File shared Successfully.");
-      }
+      return response.json();
     })
     .then((result) => {
-      console.log(result);
+      document.getElementById("alert_message_2").innerHTML = result.message;
+      return result;
     })
     .catch((error) => console.log("error", error));
 }
 
-var myHeaders = new Headers();
-var requestOptions = {
-  method: "GET",
-  headers: myHeaders,
-  redirect: "follow",
-};
+function getallfileslist() {
+  document.getElementById("files").innerHTML = "";
 
-fetch("/api/file/", requestOptions)
-  .then((response) => response.text())
-  .then((result) => {
-    result = JSON.parse(result);
-    for (var k in result.files) {
-      var x = document.getElementById("files");
-      var option = document.createElement("option");
-      option.text = result.files[k].filename;
-      option.value = result.files[k].fileid;
-      x.add(option);
-    }
+  var myHeaders = new Headers();
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
 
-    // console.log(result.files);
-  })
-  .catch((error) => console.log("error", error));
+  fetch("/api/file/", requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      result = JSON.parse(result);
+      for (var k in result.files) {
+        var x = document.getElementById("files");
+        var option = document.createElement("option");
+        option.text = result.files[k].filename;
+        option.value = result.files[k].fileid;
+        x.add(option);
+      }
+
+      // console.log(result.files);
+    })
+    .catch((error) => console.log("error", error));
+}

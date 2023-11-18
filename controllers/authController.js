@@ -28,7 +28,7 @@ async function authenticate({ email, password }) {
 
 async function register({ name, email, password }) {
   if (await User.findOne({ email })) {
-    console.log("User Signup Failed", user);
+    console.log("User Signup Failed");
     return {
       status: 409,
       response: {
@@ -36,7 +36,7 @@ async function register({ name, email, password }) {
       },
     };
   } else if (await User.findOne({ email })) {
-    console.log("User Signup Failed", user);
+    console.log("User Signup Failed");
     return {
       status: 409,
       response: {
@@ -55,7 +55,7 @@ async function register({ name, email, password }) {
     return {
       status: 200,
       response: {
-        message: "User Created.",
+        message: "User Registered Success. Login to Continue.",
       },
     };
   }

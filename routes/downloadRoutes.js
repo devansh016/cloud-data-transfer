@@ -1,15 +1,14 @@
 const express = require("express");
+const aws = require("aws-sdk");
 const router = express.Router();
 const FileShare = require("../models/fileShareModel");
-const File = require("../models/fileModel");
-const User = require("../models/userModel");
-var https = require("https");
-const aws = require("aws-sdk");
+
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_DEFAULT_REGION,
 });
+
 router.get("/download-file", downloadfile);
 router.get("/download/:shareid", displayDonwload);
 

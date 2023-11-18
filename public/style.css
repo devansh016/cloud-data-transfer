@@ -88,3 +88,14 @@ body {
 .signup label:hover {
   text-decoration: underline;
 }
+
+#alert_message_1 {
+  display: table;
+  margin: 0 auto;
+  color: red;
+}
+#alert_message_2 {
+  display: table;
+  margin: 0 auto;
+  color: red;
+}
