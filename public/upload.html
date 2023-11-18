@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cloud Data Transfer</title>
+    <!---Custom CSS File--->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <center><h1>Cloud Data Transfer</h1></center>
+    <div class="container">
+      <input type="checkbox" id="check" />
+      <div class="login form">
+        <header>Upload File</header>
+        <form action="#">
+          <input type="file" id="file" name="file" />
+
+          <input
+            type="button"
+            class="button"
+            value="Upload File"
+            onclick="upload_file()"
+          />
+        </form>
+        <div class="signup">
+          <span class="signup"
+            >Already uploaded file?
+            <label for="check">Share File</label>
+          </span>
+        </div>
+      </div>
+      <div class="registration form">
+        <header>Share File</header>
+        <form action="#">
+          <!-- <label for="file_share">Select file to share:</label>
+          <input type="checkbox" id="file_share" name="file" value="file" /> -->
+
+          <label for="cars">Choose a file:</label>
+
+          <select name="files" id="files"></select>
+          <br />
+          <input
+            id="file_email"
+            type="text"
+            placeholder="Enter email to share file"
+          />
+          <input
+            id="file_pass"
+            type="password"
+            placeholder="Create a password"
+          />
+          <input
+            type="button"
+            class="button"
+            value="Share File"
+            onclick="share_file()"
+          />
+        </form>
+        <div class="signup">
+          <span class="signup"
+            >Upload A File?
+            <label for="check">Upload File</label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

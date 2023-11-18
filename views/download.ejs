@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cloud Data Transfer</title>
+    <!---Custom CSS File--->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <center><h1>Cloud Data Transfer</h1></center>
+    <div class="container">
+      <input type="checkbox" id="check" />
+      <div class="login form">
+        <header>Download File</header>
+        <form action="#">
+          <input type="hidden" id="shareid"  value=<%- data.shareid%>>
+          File Name: <%- data.file.name%> <br><br>
+          File Shared By: <%- data.file.shared_by%><br><br>
+          File Shared To: <%- data.email%><br><br>
+          <input
+            id="d_pass"
+            type="password"
+            placeholder="Enter file password"
+          />
+          <input
+            id="file_d"
+            type="button"
+            class="button"
+            value="Unlock File"
+            onclick="download_file()"
+          />
+        </form>
+      </div>
+
+      </div>
+    </div>
+    <script src="/script.js"></script>
+  </body>
+</html>
