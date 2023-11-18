@@ -11,7 +11,7 @@ async function sendFileSharingEmail({ senderName, fileUrl, emailReceiver }) {
     },
     tls: { rejectUnauthorized: false },
   });
-  const text = `Hi there, ${senderName} has shared a file with you. You can download it from ${fileUrl} \n  \n Thanks, \n Cloud Data Transfer`;
+  const text = `Hi there,\n ${senderName} has shared a file with you. You can download it from ${fileUrl} \n  \n Thanks, \n Cloud Data Transfer`;
 
   let info = await transporter.sendMail({
     from: `Cloud Data Transfer <${process.env.email_user}>`,
