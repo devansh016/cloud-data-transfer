@@ -34,6 +34,7 @@ async function shareFile(req) {
     fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
     emailReceiver: "<" + req.body.email + ">",
   });
+  console.log("File Shared", fileshare);
   return {
     status: 200,
     response: {
@@ -59,6 +60,7 @@ async function saveFile(req, res, next) {
       location: req.files[0].location,
     });
     await newfile.save();
+    console.log("File Saved", newfile);
     return {
       status: 200,
       response: {

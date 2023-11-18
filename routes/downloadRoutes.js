@@ -16,6 +16,7 @@ router.get("/download/:shareid", displayDonwload);
 async function displayDonwload(req, res, next) {
   const file_share = await FileShare.findOne({ shareid: req.params.shareid });
   console.log(file_share);
+  console.log("File Download Page Viewed", file_share);
   res.render("download.ejs", {
     data: file_share,
   });
@@ -36,6 +37,7 @@ async function downloadfile(req, res, next) {
       .on("error", (error) => {});
     res.attachment;
     file.pipe(res);
+    console.log("File Downloaded", file_share);
   }
 }
 
