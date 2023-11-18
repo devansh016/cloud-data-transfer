@@ -14,7 +14,7 @@ function upload_file() {
     redirect: "follow",
   };
 
-  fetch("http://localhost/api/file/upload/", requestOptions)
+  fetch("/api/file/upload/", requestOptions)
     .then((response) => {
       if (!response.ok) {
         window.alert("Error in uploading file try again after sometime.");
@@ -45,7 +45,7 @@ function login_user() {
     redirect: "follow",
   };
 
-  fetch("http://localhost/api/auth/signin", requestOptions)
+  fetch("/api/auth/signin", requestOptions)
     .then((response) => {
       if (!response.ok) {
         window.alert("Invalid Credentials");
@@ -78,7 +78,7 @@ function register_user() {
     redirect: "follow",
   };
 
-  fetch("http://localhost/api/auth/signup", requestOptions)
+  fetch("/api/auth/signup", requestOptions)
     .then((response) => {
       if (!response.ok) {
         window.alert("Email id already in use.");
@@ -110,7 +110,7 @@ function share_file() {
     redirect: "follow",
   };
 
-  fetch("http://localhost/api/file/share", requestOptions)
+  fetch("/api/file/share", requestOptions)
     .then((response) => {
       if (!response.ok) {
         window.alert("Error in sharing file.");
@@ -132,7 +132,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("http://localhost/api/file/", requestOptions)
+fetch("/api/file/", requestOptions)
   .then((response) => response.text())
   .then((result) => {
     result = JSON.parse(result);
