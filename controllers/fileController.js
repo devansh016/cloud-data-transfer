@@ -1,7 +1,9 @@
 const File = require("../models/fileModel");
 const FileShare = require("../models/fileShareModel");
 const emailHandler = require("../utils/email-handler.js");
+const amqp = require("amqplib");
 require("dotenv").config();
+const rabbitmqURL = process.env.AMQP_URL;
 
 const { v4: uuidv4 } = require("uuid");
 
@@ -14,6 +16,7 @@ async function getAllFiles(req) {
     },
   };
 }
+
 async function shareFile(req) {
   const files = await File.findOne({ fileid: req.body.fileid });
   const fileshare = new FileShare({
@@ -29,18 +32,31 @@ async function shareFile(req) {
     password: req.body.password,
   });
   await fileshare.save();
-  emailHandler.sendFileSharingEmail({
-    senderName: req.body.name,
-    fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
-    emailReceiver: "<" + req.body.email + ">",
-  });
-  console.log("File Shared", fileshare);
-  return {
-    status: 200,
-    response: {
-      message: "File Shared Successfully!",
-    },
-  };
+
+  if (files.mimetype == "video/mp4") {
+    sendToCompressionQueue({
+      s3Key: files.key,
+    });
+    return {
+      status: 200,
+      response: {
+        message: "File Send for compression and will be shared on soon!",
+      },
+    };
+  } else {
+    emailHandler.sendFileSharingEmail({
+      senderName: req.body.name,
+      fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
+      emailReceiver: "<" + req.body.email + ">",
+    });
+    console.log("File Shared", fileshare);
+    return {
+      status: 200,
+      response: {
+        message: "File Shared Successfully!",
+      },
+    };
+  }
 }
 
 async function saveFile(req, res, next) {
@@ -70,6 +86,26 @@ async function saveFile(req, res, next) {
     };
   }
 }
+
+async function sendToCompressionQueue(jsonMessage) {
+  try {
+    const queueName = "compression_queue";
+    const connection = await amqp.connect(rabbitmqURL);
+    const channel = await connection.createChannel();
+    await channel.assertQueue(queueName, { durable: false });
+
+    channel.sendToQueue(queueName, Buffer.from(JSON.stringify(jsonMessage)));
+    console.log(`JSON Message sent to queue "${queueName}":`, jsonMessage);
+
+    await channel.close();
+    await connection.close();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Call the function to publish the JSON message
+publishJsonMessage();
 
 module.exports = {
   saveFile,
