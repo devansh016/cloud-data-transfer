@@ -95,7 +95,10 @@ async function sendToCompressionQueue(jsonMessage) {
     await channel.assertQueue(queueName, { durable: false });
 
     channel.sendToQueue(queueName, Buffer.from(JSON.stringify(jsonMessage)));
-    console.log(`JSON Message sent to queue "${queueName}":`, jsonMessage);
+    console.log(
+      `Compression request sent to queue "${queueName}":`,
+      jsonMessage
+    );
 
     await channel.close();
     await connection.close();
@@ -103,9 +106,6 @@ async function sendToCompressionQueue(jsonMessage) {
     console.error("Error:", error);
   }
 }
-
-// Call the function to publish the JSON message
-publishJsonMessage();
 
 module.exports = {
   saveFile,
