@@ -35,6 +35,10 @@ async function shareFile(req) {
 
   if (files.mimetype == "video/mp4") {
     sendToCompressionQueue({
+      senderName: req.body.name,
+      fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
+      emailReceiver: "<" + req.body.email + ">",
+      shareid: files.shareid,
       s3Key: files.key,
     });
     return {
@@ -44,11 +48,13 @@ async function shareFile(req) {
       },
     };
   } else {
-    emailHandler.sendFileSharingEmail({
+    sendToEmailQueue({
       senderName: req.body.name,
       fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
       emailReceiver: "<" + req.body.email + ">",
     });
+    // emailHandler.sendFileSharingEmail({
+    // });
     console.log("File Shared", fileshare);
     return {
       status: 200,
@@ -99,6 +105,23 @@ async function sendToCompressionQueue(jsonMessage) {
       `Compression request sent to queue "${queueName}":`,
       jsonMessage
     );
+
+    await channel.close();
+    await connection.close();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+async function sendToEmailQueue(jsonMessage) {
+  try {
+    const queueName = "email_queue";
+    const connection = await amqp.connect(rabbitmqURL);
+    const channel = await connection.createChannel();
+    await channel.assertQueue(queueName, { durable: false });
+
+    channel.sendToQueue(queueName, Buffer.from(JSON.stringify(jsonMessage)));
+    console.log(`Email request sent to queue "${queueName}":`, jsonMessage);
 
     await channel.close();
     await connection.close();

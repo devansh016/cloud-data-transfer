@@ -13,6 +13,10 @@ const fileShareSchema = new Schema({
     name: {
       type: String,
     },
+    compressed: {
+      type: Boolean,
+      default: false,
+    },
     location: {
       type: String,
     },
