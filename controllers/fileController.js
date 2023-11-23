@@ -38,7 +38,7 @@ async function shareFile(req) {
       senderName: req.body.name,
       fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
       emailReceiver: "<" + req.body.email + ">",
-      shareid: files.shareid,
+      shareid: fileshare.shareid,
       s3Key: files.key,
     });
     return {
@@ -52,7 +52,7 @@ async function shareFile(req) {
       senderName: req.body.name,
       fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
       emailReceiver: "<" + req.body.email + ">",
-      shareid: fileshare.shareid,
+      shareid: files.shareid,
     });
     // emailHandler.sendFileSharingEmail({
     // });

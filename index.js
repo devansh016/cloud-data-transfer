@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
 const database = require("./utils/database");
+const consumeMessages_compression_result_queue = require("./utils/compression_result_consumer");
 const cors = require("cors");
 const port = process.env.PORT || 80;
 
@@ -33,3 +34,5 @@ database.once("open", function () {
 app.listen(port, function () {
   console.log("App is running at port " + port);
 });
+
+consumeMessages_compression_result_queue();
