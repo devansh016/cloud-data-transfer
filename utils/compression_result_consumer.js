@@ -33,13 +33,7 @@ async function consumeMessages_compression_result_queue() {
           fileUrl: process.env.BaseUrl + "/download/" + uploadResult.shareid,
           emailReceiver: "<" + uploadResult.email + ">",
         });
-        sendToEmailQueue({
-          senderName: uploadResult.file.shared_by,
-          fileUrl: process.env.BaseUrl + "/download/" + uploadResult.shareid,
-          emailReceiver: "<" + uploadResult.email + ">",
-          shareid: uploadResult.shareid,
-        });
-        console.log("Compression Result Processed.");
+        console.log("Email sent to: ", uploadResult.email);
         channel.ack(message);
       }
     });
