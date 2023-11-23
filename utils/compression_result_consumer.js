@@ -1,5 +1,6 @@
 const amqp = require("amqplib");
 const fileShareModel = require("../models/fileShareModel");
+const emailHandler = require("../utils/email-handler.js");
 const rabbitmqURL = process.env.AMQP_URL;
 
 async function consumeMessages_compression_result_queue() {
@@ -26,9 +27,15 @@ async function consumeMessages_compression_result_queue() {
           },
           { new: true }
         );
+        console.log(jsonMessage.shareid);
+        emailHandler.sendFileSharingEmail({
+          senderName: uploadResult.file.shared_by,
+          fileUrl,
+          emailReceiver,
+        });
         sendToEmailQueue({
           senderName: uploadResult.file.shared_by,
-          fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
+          fileUrl: process.env.BaseUrl + "/download/" + uploadResult.shareid,
           emailReceiver: "<" + uploadResult.email + ">",
           shareid: uploadResult.shareid,
         });
@@ -36,23 +43,6 @@ async function consumeMessages_compression_result_queue() {
         channel.ack(message);
       }
     });
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
-async function sendToEmailQueue(jsonMessage) {
-  try {
-    const queueName = "email_queue";
-    const connection = await amqp.connect(rabbitmqURL);
-    const channel = await connection.createChannel();
-    await channel.assertQueue(queueName, { durable: false });
-
-    channel.sendToQueue(queueName, Buffer.from(JSON.stringify(jsonMessage)));
-    console.log(`Email request sent to queue "${queueName}":`, jsonMessage);
-
-    await channel.close();
-    await connection.close();
   } catch (error) {
     console.error("Error:", error);
   }
