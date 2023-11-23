@@ -30,8 +30,8 @@ async function consumeMessages_compression_result_queue() {
         console.log(jsonMessage.shareid);
         emailHandler.sendFileSharingEmail({
           senderName: uploadResult.file.shared_by,
-          fileUrl,
-          emailReceiver,
+          fileUrl: process.env.BaseUrl + "/download/" + uploadResult.shareid,
+          emailReceiver: "<" + uploadResult.email + ">",
         });
         sendToEmailQueue({
           senderName: uploadResult.file.shared_by,
