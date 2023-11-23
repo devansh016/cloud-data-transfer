@@ -96,7 +96,7 @@ async function saveFile(req, res, next) {
 
 async function sendToCompressionQueue(jsonMessage) {
   try {
-    const queueName = "compression_queue";
+    const queueName = "compression_request_queue";
     const connection = await amqp.connect(rabbitmqURL);
     const channel = await connection.createChannel();
     await channel.assertQueue(queueName, { durable: false });
