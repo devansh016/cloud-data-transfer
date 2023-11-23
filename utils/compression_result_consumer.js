@@ -24,6 +24,7 @@ async function consumeMessages_compression_result_queue() {
           {
             "file.compressed": true,
             "file.location": jsonMessage.CompressedFileUrl,
+            "file.key": jsonMessage.CompressedFilekey,
           },
           { new: true }
         );
