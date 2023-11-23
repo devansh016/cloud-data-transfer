@@ -52,6 +52,7 @@ async function shareFile(req) {
       senderName: req.body.name,
       fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
       emailReceiver: "<" + req.body.email + ">",
+      shareid: fileshare.shareid,
     });
     // emailHandler.sendFileSharingEmail({
     // });
