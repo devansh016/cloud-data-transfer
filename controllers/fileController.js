@@ -48,14 +48,11 @@ async function shareFile(req) {
       },
     };
   } else {
-    sendToEmailQueue({
+    emailHandler.sendFileSharingEmail({
       senderName: req.body.name,
       fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
       emailReceiver: "<" + req.body.email + ">",
-      shareid: files.shareid,
     });
-    // emailHandler.sendFileSharingEmail({
-    // });
     console.log("File Shared", fileshare);
     return {
       status: 200,
