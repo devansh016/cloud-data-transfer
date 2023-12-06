@@ -22,19 +22,19 @@ npm start
 ## Environment Variable Required
 
 ```sh
-MONGODB_URL = 
-PORT = 
+MONGODB_URL =
+PORT =
 JWT_SECRET =
 AWS_ACCESS_KEY_ID =
-AWS_SECRET_ACCESS_KEY = 
-AWS_DEFAULT_REGION = 
+AWS_SECRET_ACCESS_KEY =
+AWS_DEFAULT_REGION =
 AWS_S3_BUCKET =
-email_host = 
-email_port = 
-email_pass = 
-email_user = 
-BaseUrl = 
-AMQP_URL = 
+email_host =
+email_port =
+email_pass =
+email_user =
+BaseUrl =
+AMQP_URL =
 ```
 
 Your app should now be running on [localhost](http://localhost/) at port 80.
@@ -42,10 +42,7 @@ Your app should now be running on [localhost](http://localhost/) at port 80.
 ### Sytem Design
 
 ![Sytem Design](/resources/design.png "Sytem Design")
-
-
-![Editor Page](/res/images/Semicolon-EditorPage.png "Editor Page")
-
+g
 ## License
 
 Distributed under the MIT License. See [LICENSE](/LICENSE) for more information.
