@@ -33,7 +33,7 @@ async function shareFile(req) {
   });
   await fileshare.save();
 
-  if (files.mimetype == "video/mp4") {
+  if (files.mimetype == "video/mp4" || files.mimetype == "video/mkv" ) {
     sendToCompressionQueue({
       senderName: req.body.name,
       fileUrl: process.env.BaseUrl + "/download/" + fileshare.shareid,
