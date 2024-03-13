@@ -14,15 +14,16 @@ async function sendFileSharingEmail({ senderName, fileUrl, emailReceiver }) {
 
   const html = `
     <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
-      <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h2 style="font-family: 'Arial', sans-serif; color: #333333; margin-bottom: 20px;">File Shared Notification</h2>
-        <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">Hi there,</p>
-        <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">${senderName} has shared a file with you.</p>
-        <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">You can download it <a href="${fileUrl}" style="color: #007bff; text-decoration: none;">here</a>.</p>
-        <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">Thanks,</p>
-        <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">Cloud Data Transfer</p>
-      </div>
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <h1 style="font-family: 'Arial', sans-serif; color: #333333; margin-bottom: 20px;">📁 File Shared Notification 📁</h1>
+      <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">Hi there,</p>
+      <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">${senderName} has shared a file with you.</p>
+      <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">You can download it <a href="${fileUrl}" style="color: #007bff; text-decoration: none;">here</a>.</p>
+      <br>
+      <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">Best regards,</p>
+      <p style="font-family: 'Arial', sans-serif; color: #666666; font-size: 16px;">Cloud Data Transfer Team</p>
     </div>
+  </div>
   `;
 
   let info = await transporter.sendMail({
